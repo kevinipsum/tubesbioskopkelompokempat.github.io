@@ -3,7 +3,6 @@
 #include "labelkursi.h"
 #include "carikursi.h"
 #include "hitungkosongkursi.h"
-#include "simpanstatus.h"
 #include "tiket.h"
 #include "billtiket.h"
 #include "booking.h"
