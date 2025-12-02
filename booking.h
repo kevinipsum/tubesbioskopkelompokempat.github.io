@@ -3,7 +3,6 @@
 void bookingkursi(int indexfilm) {
     int jumlah;
 
-    // ⬇️ DITAMBAHKAN: Perulangan sampai input jumlah tiket valid
     while (1) {
         printf("Masukkan jumlah tiket yang ingin dibeli (1-%d): ", makskursi);
 
@@ -18,11 +17,9 @@ void bookingkursi(int indexfilm) {
             continue;
         }
 
-        break; // input benar → keluar loop
+        break;
     }
-    // ⬆️ HANYA BLOK INI YANG DITAMBAHKAN
-
-
+   
     char kodeKursi[makskursi][panjangkode];
     int indices[makskursi][2];
 
