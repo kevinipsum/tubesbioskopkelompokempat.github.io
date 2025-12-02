@@ -13,10 +13,16 @@ int status[jumlahfilm][totalbaris][totalkolom];
 
 int pilih() {
     int pilihan;
-    printf("\n=== PILIH FILM ===\n");
+
+    printf("\033[1;36m========================================\033[0m\n");
+    printf("\033[1;33m|              PILIH FILM              |\033[0m\n");
+    printf("\033[1;36m========================================\033[0m\n");
+
     for (int i = 0; i < jumlahfilm; i++) {
         printf("%d. %s (Studio %d) - %s\n", i + 1, namafilm[i], studiofilm[i], jamfilm[i]);
     }
+
+    printf("\033[1;36m========================================\033[0m\n");
     printf("Pilih film (1-%d): ", jumlahfilm);
     if (scanf("%d", &pilihan) != 1) {
         printf("Input tidak valid!\n");
@@ -28,4 +34,5 @@ int pilih() {
         return -1;
     }
     return pilihan - 1;
+    printf("\033[1;36m========================================\033[0m\n");
 }
