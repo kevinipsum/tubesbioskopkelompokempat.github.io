@@ -2,25 +2,39 @@
 
 void bookingkursi(int indexfilm) {
     int jumlah;
-    printf("Masukkan jumlah tiket yang ingin dibeli (1-%d): ", makskursi);
-    if (scanf("%d", &jumlah) != 1 || jumlah < 1 || jumlah > makskursi) {
-        printf("Jumlah tiket tidak valid\n");
-        while (getchar() != '\n');
-        return;
+
+    // ⬇️ DITAMBAHKAN: Perulangan sampai input jumlah tiket valid
+    while (1) {
+        printf("Masukkan jumlah tiket yang ingin dibeli (1-%d): ", makskursi);
+
+        if (scanf("%d", &jumlah) != 1) {
+            printf("Input tidak valid! Masukkan angka.\n");
+            while (getchar() != '\n');
+            continue;
+        }
+
+        if (jumlah < 1 || jumlah > makskursi) {
+            printf("Jumlah tiket tidak valid! Harus 1-%d.\n", makskursi);
+            continue;
+        }
+
+        break; // input benar → keluar loop
     }
+    // ⬆️ HANYA BLOK INI YANG DITAMBAHKAN
+
 
     char kodeKursi[makskursi][panjangkode];
     int indices[makskursi][2];
 
     printf("Masukkan kode kursi (misal a1 c3 c4):\n");
     for (int i = 0; i < jumlah; i++) {
-        while (1) {  // LOOP VALIDASI KODE KURSI
+        while (1) {
             printf("Kursi %d: ", i + 1);
 
             if (scanf("%3s", kodeKursi[i]) != 1) {
                 printf("Input tidak valid, coba lagi.\n");
                 while (getchar() != '\n');
-                continue;  // ulangi input kursi
+                continue;
             }
 
             toUppercase(kodeKursi[i]);
@@ -28,15 +42,14 @@ void bookingkursi(int indexfilm) {
             int r, c;
             if (!kodeToIndex(kodeKursi[i], &r, &c)) {
                 printf("Kode kursi %s invalid! Silakan masukkan ulang.\n", kodeKursi[i]);
-                continue;  // ulangi input
+                continue;
             }
 
             if (status[indexfilm][r][c] == 1) {
-                printf("Kursi %s sudah terisi! Silakan pilih kursi lain.\n", kodeKursi[i]);
-                continue;  // ulangi input
+                printf("Kursi %s sudah terisi! Pilih kursi lain.\n", kodeKursi[i]);
+                continue;
             }
 
-            // VALID → SIMPAN INDEX
             indices[i][0] = r;
             indices[i][1] = c;
             break;
@@ -49,22 +62,42 @@ void bookingkursi(int indexfilm) {
         if (i < jumlah - 1) printf(", ");
     }
 
-    printf("\nKonfirmasi booking? (y/n): ");
     char konfir;
-    scanf(" %c", &konfir);
-    if (tolower(konfir) != 'y') {
-        printf("Booking dibatalkan\n");
+    while (1) {
+        printf("\nKonfirmasi booking? (y/n): ");
+        scanf(" %c", &konfir);
+        konfir = tolower(konfir);
+
+        if (konfir == 'y' || konfir == 'n')
+            break;
+
+        printf("Input tidak valid! Masukkan hanya 'y' atau 'n'.\n");
+    }
+
+    if (konfir == 'n') {
+        printf("Booking dibatalkan.\n");
         return;
     }
 
     int totalHarga = jumlah * hargatiket;
     printf("Total harga: Rp %d\n", totalHarga);
-    printf("Masukkan jumlah uang: Rp ");
+
     int bayar;
-    if (scanf("%d", &bayar) != 1 || bayar < totalHarga) {
-        printf("Uang tidak cukup\n");
-        while (getchar() != '\n');
-        return;
+    while (1) {
+        printf("Masukkan jumlah uang: Rp ");
+
+        if (scanf("%d", &bayar) != 1) {
+            printf("Input tidak valid! Masukkan angka.\n");
+            while (getchar() != '\n');
+            continue;
+        }
+
+        if (bayar < totalHarga) {
+            printf("Uang tidak cukup! Total: Rp %d, Uang Anda: Rp %d\n", totalHarga, bayar);
+            continue;
+        }
+
+        break;
     }
 
     int kembalian = bayar - totalHarga;
